@@ -258,3 +258,7 @@ img.right {
 .ui-widget {
     font-size: 12px !important;
 }
+
+.ui-layout-north .ui-layout-unit-content {
+   background: #2C2C2C ;
+}

@@ -1,14 +1,87 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	    		xmlns:ui="http://java.sun.com/jsf/facelets"
-	  			xmlns:h="http://java.sun.com/jsf/html"
-	  			xmlns:f="http://java.sun.com/jsf/core"
-	  			xmlns:p="http://primefaces.org/ui"
-				template="/WEB-INF/layouts/standard.xhtml">
-<ui:define name="content">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/layouts/standard.xhtml">
+	<ui:define name="content">
 		<h1>Administrador</h1>
-		<h:form>
-			<p:outputLabel value="#{admin.value}" />
+		<h:form id="formAdmin">
+		<p:panel header="Editar parámetros"> 
+		<h:panelGrid columns="3">
+		<p:panelGrid columns="3">
+			<f:facet name="header">Parrilla</f:facet>
+
+			<h:outputLabel for="placainf" value="Placa inf:" />
+			<p:inputText id="placainf" value="#{admin.parrilaTempInf}" />
+			<p:message id="placainfMsg" for="placainf" />
+			
+			<h:outputLabel for="placasup" value="Placa sup:" />
+			<p:inputText id="placasup" value="#{admin.parrilaTempSup}" />
+			<p:message id="placasupMsg" for="placasup" />
+			
+			<h:outputLabel for="secparrilla" value="Tiempo coc:" />
+			<p:inputText id="secparrilla" value="#{admin.secParrilla}" />
+			<p:message id="secparrillaMsg" for="secparrilla" />
+			
+			<h:outputLabel for="tempinfcarne" value="Temp inf carne:" />
+			<p:inputText id="tempinfcarne" value="#{admin.carneTempCotaInf}" />
+			<p:message id="tempinfcarneMsg" for="tempinfcarne" />
+			
+			<h:outputLabel for="tempsupcarne" value="Temp sup carne:" />
+			<p:inputText id="tempsupcarne" value="#{admin.carneTempCotaSup}" />
+			<p:message id="tempsupcarneMsg" for="tempsupcarne" />
+		</p:panelGrid>
+		
+		<p:panelGrid columns="3">
+			<f:facet name="header">Tostadora</f:facet>
+			
+			<h:outputLabel for="pinf" value="Placa inf:" />
+			<p:inputText id="pinf" value="#{admin.tostadoraTempInf}" />
+			<p:message id="pinfMsg" for="pinf" />
+			
+			<h:outputLabel for="psup" value="Placa sup:" />
+			<p:inputText id="psup" value="#{admin.tostadoraTempSup}" />
+			<p:message id="psupMsg" for="psup" />
+			
+			<h:outputLabel for="sectostadora" value="Tiempo coc:" />
+			<p:inputText id="sectostadora" value="#{admin.secTostadora}" />
+			<p:message id="sectostadoraMsg" for="sectostadora" />
+			
+			<h:outputLabel for="tempinfpan" value="Temp inf pan:" />
+			<p:inputText id="tempinfpan" value="#{admin.panTempCotaInf}" />
+			<p:message id="tempinfpanMsg" for="tempinfpan" />
+			
+			<h:outputLabel for="tempsuppan" value="Temp sup pan:" />
+			<p:inputText id="tempsuppan" value="#{admin.panTempCotaSup}" />
+			<p:message id="tempsuppanMsg" for="tempsuppan" />
+		</p:panelGrid>
+		
+		<p:panelGrid columns="3">
+			<f:facet name="header">Condimentación</f:facet>
+			
+			<h:outputLabel for="ketchup" value="Oz ketchup:" />
+			<p:inputText id="ketchup" value="#{admin.onzaKetchup}" />
+			<p:message id="ketchupMsg" for="ketchup" />
+			
+			<h:outputLabel for="mostaza" value="Oz mostaza:" />
+			<p:inputText id="mostaza" value="#{admin.onzaMostaza}" />
+			<p:message id="mostazaMsg" for="mostaza" />
+			
+			<h:outputLabel for="cebolla" value="Oz cebolla:" />
+			<p:inputText id="cebolla" value="#{admin.onzaCebolla}" />
+			<p:message id="cebollaMsg" for="cebolla" />
+		</p:panelGrid>
+		<p:commandButton id="guardar_btn" value="Guardar" icon="ui-icon-check" update="@form"
+					style="margin:0" actionListener="#{admin.guardar}" />
+		<h:outputText/>
+		<h:outputText/>
+		</h:panelGrid>
+		</p:panel>
 		</h:form>
-</ui:define>
+		<p:panel header="Estado del proceso">
+			
+		</p:panel>
+	</ui:define>
 </ui:composition>

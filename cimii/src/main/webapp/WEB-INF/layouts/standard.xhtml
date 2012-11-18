@@ -14,7 +14,14 @@
 	<link rel="stylesheet" href="${request.contextPath}/css/default.css" type="text/css" />
 </h:head>
 <h:body>
-<ui:insert name="content"/>
+<p:layout fullPage="true">
+	<p:layoutUnit position="north" size="100">
+		<p:graphicImage value="/image/banner.png"/>
+	</p:layoutUnit>
+	<p:layoutUnit position="center">
+		<ui:insert name="content"/>
+	</p:layoutUnit>
+</p:layout>
 </h:body>
 </f:view>
 </html>
