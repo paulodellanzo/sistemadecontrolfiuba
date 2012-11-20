@@ -7,8 +7,56 @@
 				template="/WEB-INF/layouts/standard.xhtml">
 <ui:define name="content">
 		<h1>Cocinero</h1>
-		<h:form>
-			<p:outputLabel value="#{cocinero.value}" />
+		<h:form id="formCocinero">
+		<p:panel header="Confirmar pedido">
+			<p:dataTable id="tablaHamburguesas" var="pedido" value="#{cocinero.pedidoHamburguesas}" >
+				<p:column headerText="Tipo">
+					<h:outputText value="#{pedido.descripcion}"/>
+				</p:column>
+				<p:column headerText="Hora">
+					<h:outputText value="#{pedido.fecha.time}">
+						<f:convertDateTime pattern="HH:mm:ss" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Tipo">
+					<p:commandButton  id="conf_btn" value="Confirmar" update="@form" process="@form">
+						<p:collector value="#{pedido}" removeFrom="#{cocinero.pedidoHamburguesas}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+		<p:panel header="Cocinar">
+			<h3>Los comandos de esta sección simulan las acciones del cocinero sobre las herramientas</h3>
+			<p:commandButton  id="add_base" value="Agregar base" update="@form" actionListener="#{cocinero.agregarBase}" />
+			<p:commandButton  id="add_corona" value="Agregar corona" update="@form" actionListener="#{cocinero.agregarCorona}" />
+			<p:commandButton  id="add_carne" value="Agregar carne" update="@form" actionListener="#{cocinero.agregarCarne}" />
+		</p:panel>
+		</h:form>
+		<h:form id="estadoProcesoForm">
+		<p:panel id="estadoProceso" header="Estado proceso">
+			<p:poll interval="1" update="estadoProceso" />
+			<h:panelGrid columns="4" >
+				<h:outputText styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value="Tostadora Coronas" />
+				<h:outputText styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value="Tostadora Bases" />
+				<h:outputText styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value="Parrilla" />
+				<h:outputText styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value="Cinta transportadora" />
+				<h:outputText value="#{maquinas.tostCorona.enEspera ? 'Disponible' : 'No disponible'}" />
+				<h:outputText value="#{maquinas.tostBase.enEspera ? 'Disponible' : 'No disponible'}" />
+				<h:outputText value="#{maquinas.parrilla.enEspera ? 'Disponible' : 'No disponible'}" />
+				<h:outputText value="Coronas: #{maquinas.cinta.cantCoronas}" />
+				<h:outputText value="Temp: #{maquinas.tostCorona.temperatura}°C" />
+				<h:outputText value="Temp: #{maquinas.tostBase.temperatura}°C" />
+				<h:outputText value="Temp: #{maquinas.parrilla.temperatura}°C" />
+				<h:outputText value="Carnes: #{maquinas.cinta.cantCarnes}" />
+				<h:outputText value="Coronas: #{maquinas.tostCorona.cantPanes}" />
+				<h:outputText value="Bases: #{maquinas.tostBase.cantPanes}" />
+				<h:outputText value="Carnes: #{maquinas.parrilla.cantCarnes}" />
+				<h:outputText value="Bases: #{maquinas.cinta.cantBases}" />
+				<h:outputText value="Tapa #{maquinas.tostCorona.tapaCerrada ? 'cerrada' : 'abierta'}" />
+				<h:outputText value="Tapa #{maquinas.tostBase.tapaCerrada ? 'cerrada' : 'abierta'}" />
+				<h:outputText value="Tapa #{maquinas.parrilla.tapaCerrada ? 'cerrada' : 'abierta'}" />
+			</h:panelGrid>
+		</p:panel>
 		</h:form>
 </ui:define>
 </ui:composition>

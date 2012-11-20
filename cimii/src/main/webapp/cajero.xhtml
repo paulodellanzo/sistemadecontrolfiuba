@@ -7,8 +7,46 @@
 				template="/WEB-INF/layouts/standard.xhtml">
 <ui:define name="content">
 		<h1>Cajero</h1>
-		<h:form>
-			<p:outputLabel value="#{cajero.value}" />
+		<h:form id="formCajero">
+			<p:panel header="Pedir">
+			<h:panelGrid columns="3">
+			<p:panel header="Bebidas">
+					<h:panelGrid columns="3">
+						<p:commandButton id="coca_btn" value="Coca-Cola" update="@form" style="margin:0" actionListener="#{cajero.pedirCoca}" />
+						<p:commandButton id="fanta_btn" value="Fanta" update="@form" style="margin:0" actionListener="#{cajero.pedirFanta}" />
+						<p:commandButton id="sevenup_btn" value="7up" update="@form" style="margin:0" actionListener="#{cajero.pedirSevenUp}" />
+					</h:panelGrid>
+					<p:dataTable id="tablaBebidas" var="pedido" value="#{cajero.pedidoBebidas}">
+						<p:column headerText="Tipo">
+							<h:outputText value="#{pedido.descripcion}"/>
+						</p:column>
+						<p:column headerText="Hora">
+							<h:outputText value="#{pedido.fecha.time}">
+								<f:convertDateTime pattern="HH:mm:ss" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<p:panel header="Hamburguesas">
+					<h:panelGrid columns="1">
+						<p:commandButton id="hamb_btn" value="Hamburguesa simple" update="@form" style="margin:0" actionListener="#{cajero.pedirHamb}" />
+					</h:panelGrid>
+					<p:dataTable id="tablaHamburguesas" var="pedido" value="#{cajero.pedidoHamburguesas}" >
+						<p:column headerText="Tipo">
+							<h:outputText value="#{pedido.descripcion}"/>
+						</p:column>
+						<p:column headerText="Hora">
+							<h:outputText value="#{pedido.fecha.time}">
+								<f:convertDateTime pattern="HH:mm:ss" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</h:panelGrid>
+		</p:panel>
 		</h:form>
+		<p:panel header="Estado bebidas">
+			
+		</p:panel>
 </ui:define>
 </ui:composition>
