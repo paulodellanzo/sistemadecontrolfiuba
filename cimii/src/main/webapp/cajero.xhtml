@@ -8,9 +8,10 @@
 <ui:define name="content">
 		<h1>Cajero</h1>
 		<h:form id="formCajero">
-			<p:panel header="Pedir">
+			<p:poll interval="1" update="pedir :estadoBebidas alertas" listener="#{cajero.updateAlertas}" />
+			<p:panel id="pedir" header="Pedir">
 			<h:panelGrid columns="3">
-			<p:panel header="Bebidas">
+			<p:panel id="bebidas" header="Bebidas">
 					<h:panelGrid columns="3">
 						<p:commandButton id="coca_btn" value="Coca-Cola" update="@form" style="margin:0" actionListener="#{cajero.pedirCoca}" />
 						<p:commandButton id="fanta_btn" value="Fanta" update="@form" style="margin:0" actionListener="#{cajero.pedirFanta}" />
@@ -44,9 +45,22 @@
 				</p:panel>
 			</h:panelGrid>
 		</p:panel>
+		<p:panel id="alertas" header="Alertas">
+			<p:commandButton  id="alerta_btn" value="Limpiar" actionListener="#{cajero.clearAlertas}" update="@form" process="@form" />
+			<p:dataList var="alerta" value="#{cajero.alertas}">
+				<h:outputText style="color: red" value="#{alerta}" />
+			</p:dataList>
+		</p:panel>
 		</h:form>
-		<p:panel header="Estado bebidas">
-			
+		<p:panel id="estadoBebidas" header="Estado bebidas">
+			<h:panelGrid columns="2">
+				<h:outputText value="Estado: " />
+				<h:outputText style="font-weight:bold !important; color:black" value="#{cajero.bebidas.estado}" />
+				<h:outputText value="Vasos rest:"/>
+				<h:outputText value="#{cajero.bebidas.cantVasos}" />
+				<h:outputText value="Servido:"/>
+				<p:progressBar value="#{cajero.bebidas.porcentajeServido}" labelTemplate="#{cajero.bebidas.porcentajeServido}%" displayOnly="true"/>
+			</h:panelGrid>
 		</p:panel>
 </ui:define>
 </ui:composition>

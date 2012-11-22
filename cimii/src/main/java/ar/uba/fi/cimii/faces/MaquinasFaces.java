@@ -31,6 +31,7 @@ public class MaquinasFaces {
 		tostCorona = TostadoraCorona.getInstance();
 		parrilla = Parrilla.getInstance();
 		dispenser = Dispenser.getInstance();
+		cinta = CintaTransportadora.getInstance();
 	}
 
 	public TostadoraBases getTostBase() {

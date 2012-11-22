@@ -8,6 +8,7 @@
 	<ui:define name="content">
 		<h1>Administrador</h1>
 		<h:form id="formAdmin">
+		<p:poll interval="1" update=":estadoBebidas :estadoProceso alertas" listener="#{admin.updateAlertas}" />
 		<p:panel header="Editar parámetros"> 
 		<h:panelGrid columns="3">
 		<p:panelGrid columns="3">
@@ -79,12 +80,98 @@
 		<h:outputText/>
 		</h:panelGrid>
 		</p:panel>
-		</h:form>
-		<p:panel header="Estado del proceso">
-			
+		<p:panel id="alertas" header="Alertas">
+			<p:commandButton  id="alerta_btn" value="Limpiar" actionListener="#{admin.clearAlertas}" update="@form" process="@form" />
+			<p:dataList var="alerta" value="#{admin.alertas}">
+				<h:outputText style="color: red" value="#{alerta}" />
+			</p:dataList>
 		</p:panel>
-		<p:panel header="Estado bebidas">
-			
+		</h:form>
+		<p:panel id="estadoProceso" header="Estado del proceso">
+			<p:panelGrid columns="2">
+				<f:facet name="header">Proceso</f:facet>
+				<h:outputText value="Estado: " />
+				<h:outputText style="font-weight:bold !important; color:black" value="#{proceso.procesoActual.estado}" />
+				<h:outputText value="Comienzo:" />
+				<h:outputText value="#{proceso.procesoActual.horaInicio.time}" ><f:convertDateTime pattern="HH:mm:ss" /></h:outputText>
+				<h:outputText value="Fin:" />
+				<h:outputText value="#{proceso.procesoActual.horaFin.time}" ><f:convertDateTime pattern="HH:mm:ss" /></h:outputText>
+				<h:outputText value="Segundos: " />
+				<h:outputText value="#{proceso.procesoActual.segundosProceso}" />
+			</p:panelGrid>
+			<h:panelGrid columns="5">
+				<p:panelGrid columns="2">
+					<f:facet name="header">Tostadora Coronas</f:facet>
+					<h:outputText value="Estado: " />
+					<h:outputText value="#{maquinas.tostCorona.estado}" />
+					<h:outputText value="#{maquinas.tostCorona.enEspera ? 'Disponible' : 'No disponible'}" />
+					<h:outputText value="" />
+					<h:outputText value="Temp: " />
+					<h:outputText value="#{maquinas.tostCorona.temperatura}°C" />
+					<h:outputText value="Coronas: " />
+					<h:outputText value="#{maquinas.tostCorona.cantPanes}" />
+					<h:outputText value="Tapa: " />
+					<h:outputText value="#{maquinas.tostCorona.tapaCerrada ? 'cerrada' : 'abierta'}" />
+				</p:panelGrid>
+				<p:panelGrid columns="2">
+					<f:facet name="header">Tostadora Bases</f:facet>
+					<h:outputText value="Estado: " />
+					<h:outputText value="#{maquinas.tostBase.estado}" />
+					<h:outputText value="#{maquinas.tostBase.enEspera ? 'Disponible' : 'No disponible'}" />
+					<h:outputText value="" />
+					<h:outputText value="Temp: " />
+					<h:outputText value="#{maquinas.tostBase.temperatura}°C" />
+					<h:outputText value="Bases: " />
+					<h:outputText value="#{maquinas.tostBase.cantPanes}" />
+					<h:outputText value="Tapa: " />
+					<h:outputText value="#{maquinas.tostBase.tapaCerrada ? 'cerrada' : 'abierta'}" />
+				</p:panelGrid>
+				<p:panelGrid columns="2">
+					<f:facet name="header">Parrilla</f:facet>
+					<h:outputText value="Estado: " />
+					<h:outputText value="#{maquinas.parrilla.estado}" />
+					<h:outputText value="#{maquinas.parrilla.enEspera ? 'Disponible' : 'No disponible'}" />
+					<h:outputText value="" />
+					<h:outputText value="Temp: " />
+					<h:outputText value="#{maquinas.parrilla.temperatura}°C" />
+					<h:outputText value="Carnes: " />
+					<h:outputText value="#{maquinas.parrilla.cantCarnes}" />
+					<h:outputText value="Tapa: " />
+					<h:outputText value="#{maquinas.parrilla.tapaCerrada ? 'cerrada' : 'abierta'}" />
+				</p:panelGrid>
+				<p:panelGrid columns="2">
+					<f:facet name="header">Cinta transportadora</f:facet>
+					<h:outputText value="Estado: " />
+					<h:outputText value="#{maquinas.cinta.estado}" />
+					<h:outputText value="Coronas: " />
+					<h:outputText value="#{maquinas.cinta.cantCoronas}" />
+					<h:outputText value="Carnes: " />
+					<h:outputText value="#{maquinas.cinta.cantCarnes}" />
+					<h:outputText value="Bases: " />
+					<h:outputText value="#{maquinas.cinta.cantBases}" />
+				</p:panelGrid>
+				<p:panelGrid columns="2">
+					<f:facet name="header">Dispenser</f:facet>
+					<h:outputText value="Estado: " />
+					<h:outputText value="#{maquinas.dispenser.estado}" />
+					<h:outputText value="Ketchup: " />
+					<h:outputText value="#{maquinas.dispenser.cantKetchup}  oz" />
+					<h:outputText value="Mostaza: " />
+					<h:outputText value="#{maquinas.dispenser.cantMostaza} oz" />
+					<h:outputText value="Cebolla: " />
+					<h:outputText value="#{maquinas.dispenser.cantCebolla} oz" />
+				</p:panelGrid>
+			</h:panelGrid>
+		</p:panel>
+		<p:panel id="estadoBebidas" header="Estado bebidas">
+			<h:panelGrid columns="2">
+				<h:outputText value="Estado: " />
+				<h:outputText style="font-weight:bold !important; color:black" value="#{cajero.bebidas.estado}" />
+				<h:outputText value="Vasos rest:"/>
+				<h:outputText value="#{admin.bebidas.cantVasos}" />
+				<h:outputText value="Servido:"/>
+				<p:progressBar value="#{admin.bebidas.porcentajeServido}" labelTemplate="#{admin.bebidas.porcentajeServido}%" displayOnly="true"/>
+			</h:panelGrid>
 		</p:panel>
 	</ui:define>
 </ui:composition>

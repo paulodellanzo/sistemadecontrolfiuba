@@ -9,32 +9,32 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import ar.uba.fi.cimii.control.Alertas;
 import ar.uba.fi.cimii.domain.entities.Pedido;
+import ar.uba.fi.cimii.maquinas.Bebidas;
 
 @SessionScoped
 @ManagedBean(name = "cajero")
 public class CajeroFaces {
 
-	private List<Pedido> pedidoBebidas;
+	Bebidas bebidas;
 	
 	@ManagedProperty(value="#{cocinero}")
 	private CocineroFaces cocineroFaces;
+	
+	private List<String> alertas;
 
 	public CajeroFaces() {
 		super();
-		
-		pedidoBebidas = new ArrayList<Pedido>();
-		
-		pedidoBebidas.add(new Pedido("bebida1", Calendar.getInstance()));
-		pedidoBebidas.add(new Pedido("bebida2", Calendar.getInstance()));
+		bebidas = Bebidas.getInstance();
 	}
 
 	public List<Pedido> getPedidoBebidas() {
-		return pedidoBebidas;
+		return bebidas.getPedidoBebidas();
 	}
 
 	public void setPedidoBebidas(List<Pedido> pedidoBebidas) {
-		this.pedidoBebidas = pedidoBebidas;
+		bebidas.setPedidoBebidas(pedidoBebidas);
 	}
 
 	public List<Pedido> getPedidoHamburguesas() {
@@ -54,18 +54,39 @@ public class CajeroFaces {
 	}
 
 	public void pedirCoca() {
-		pedidoBebidas.add(new Pedido("Coca-Cola", Calendar.getInstance()));
+		bebidas.getPedidoBebidas().add(new Pedido("Coca-Cola", Calendar.getInstance()));
 	}
 	
 	public void pedirFanta() {
-		pedidoBebidas.add(new Pedido("Fanta", Calendar.getInstance()));
+		bebidas.getPedidoBebidas().add(new Pedido("Fanta", Calendar.getInstance()));
 	}
 	
 	public void pedirSevenUp() {
-		pedidoBebidas.add(new Pedido("7up", Calendar.getInstance()));
+		bebidas.getPedidoBebidas().add(new Pedido("7up", Calendar.getInstance()));
 	}
 	
 	public void pedirHamb() {
 		cocineroFaces.getPedidoHamburguesas().add(new Pedido("Hamburguesa simple", Calendar.getInstance()));
 	}
+
+	public Bebidas getBebidas() {
+		return bebidas;
+	}
+	
+	public void updateAlertas() {
+		alertas = Alertas.getInstance().getAlertasCajero();
+	}
+	
+	public void clearAlertas() {
+		Alertas.getInstance().getAlertasCajero().clear();
+	}
+
+	public List<String> getAlertas() {
+		return alertas;
+	}
+
+	public void setAlertas(List<String> alertas) {
+		this.alertas = alertas;
+	}
+	
 }

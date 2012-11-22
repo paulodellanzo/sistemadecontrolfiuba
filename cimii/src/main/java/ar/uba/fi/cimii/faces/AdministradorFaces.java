@@ -1,137 +1,156 @@
 package ar.uba.fi.cimii.faces;
 
+import java.util.List;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.validation.constraints.Min;
 
+import ar.uba.fi.cimii.control.Alertas;
+import ar.uba.fi.cimii.control.Configuracion;
+import ar.uba.fi.cimii.maquinas.Bebidas;
+
 @SessionScoped
 @ManagedBean(name = "admin")
 public class AdministradorFaces {
-
-	//Falta validar
-	private int parrilaTempSup = 100;
-	private int parrilaTempInf = 100;
-	private int secParrilla = 50;
-	private int carneTempCotaInf = 100;
-	private int carneTempCotaSup = 100;
-	private int tostadoraTempSup = 100;
-	private int tostadoraTempInf = 100;
-	private int secTostadora = 50;
-	private int panTempCotaInf = 100;
-	private int panTempCotaSup = 100;
-	private int onzaKetchup = 100;
-	private int onzaMostaza = 100;
-	private int onzaCebolla = 100;
+	
+	Configuracion conf;
+	
+	Bebidas bebidas;
+	
+	private List<String> alertas;
 	
 	public AdministradorFaces() {
 		super();
+		conf = Configuracion.getInstance();
+		bebidas = Bebidas.getInstance();
 	}
 
 	public int getParrilaTempSup() {
-		return parrilaTempSup;
+		return conf.getParrilaTempSup();
 	}
 
 	public void setParrilaTempSup(int parrilaTempSup) {
-		this.parrilaTempSup = parrilaTempSup;
+		conf.setParrilaTempSup(parrilaTempSup);
 	}
 
 	public int getParrilaTempInf() {
-		return parrilaTempInf;
+		return conf.getParrilaTempInf();
 	}
 
 	public void setParrilaTempInf(int parrilaTempInf) {
-		this.parrilaTempInf = parrilaTempInf;
+		conf.setParrilaTempInf(parrilaTempInf);
 	}
 
 	public int getCarneTempCotaInf() {
-		return carneTempCotaInf;
+		return conf.getCarneTempCotaInf();
 	}
 
 	public void setCarneTempCotaInf(int carneTempCotaInf) {
-		this.carneTempCotaInf = carneTempCotaInf;
+		conf.setCarneTempCotaInf(carneTempCotaInf);
 	}
 
 	public int getCarneTempCotaSup() {
-		return carneTempCotaSup;
+		return conf.getCarneTempCotaSup();
 	}
 
 	public void setCarneTempCotaSup(int carneTempCotaSup) {
-		this.carneTempCotaSup = carneTempCotaSup;
+		conf.setCarneTempCotaSup(carneTempCotaSup);
 	}
 
 	public int getTostadoraTempSup() {
-		return tostadoraTempSup;
+		return conf.getTostadoraTempSup();
 	}
 
 	public void setTostadoraTempSup(int tostadoraTempSup) {
-		this.tostadoraTempSup = tostadoraTempSup;
+		conf.setTostadoraTempSup(tostadoraTempSup);
 	}
 
 	public int getTostadoraTempInf() {
-		return tostadoraTempInf;
+		return conf.getTostadoraTempInf();
 	}
 
 	public void setTostadoraTempInf(int tostadoraTempInf) {
-		this.tostadoraTempInf = tostadoraTempInf;
+		conf.setTostadoraTempInf(tostadoraTempInf);
 	}
 
 	public int getPanTempCotaInf() {
-		return panTempCotaInf;
+		return conf.getPanTempCotaInf();
 	}
 
 	public void setPanTempCotaInf(int panTempCotaInf) {
-		this.panTempCotaInf = panTempCotaInf;
+		conf.setPanTempCotaInf(panTempCotaInf);
 	}
 
 	public int getPanTempCotaSup() {
-		return panTempCotaSup;
+		return conf.getPanTempCotaSup();
 	}
 
 	public void setPanTempCotaSup(int panTempCotaSup) {
-		this.panTempCotaSup = panTempCotaSup;
+		conf.setPanTempCotaSup(panTempCotaSup);
 	}
 
 	public int getOnzaKetchup() {
-		return onzaKetchup;
+		return conf.getOnzaKetchup();
 	}
 
 	public void setOnzaKetchup(int onzaKetchup) {
-		this.onzaKetchup = onzaKetchup;
+		conf.setOnzaKetchup(onzaKetchup);
 	}
 
 	public int getOnzaMostaza() {
-		return onzaMostaza;
+		return conf.getOnzaMostaza();
 	}
 
 	public void setOnzaMostaza(int onzaMostaza) {
-		this.onzaMostaza = onzaMostaza;
+		conf.setOnzaMostaza(onzaMostaza);
 	}
 
 	public int getOnzaCebolla() {
-		return onzaCebolla;
+		return conf.getOnzaCebolla();
 	}
 
 	public void setOnzaCebolla(int onzaCebolla) {
-		this.onzaCebolla = onzaCebolla;
+		conf.setOnzaCebolla(onzaCebolla);
 	}
 	
 	public int getSecParrilla() {
-		return secParrilla;
+		return conf.getSecParrilla();
 	}
 
 	public void setSecParrilla(int secParrilla) {
-		this.secParrilla = secParrilla;
+		conf.setSecParrilla(secParrilla);
 	}
 
 	public int getSecTostadora() {
-		return secTostadora;
+		return conf.getSecTostadora();
 	}
 
 	public void setSecTostadora(int secTostadora) {
-		this.secTostadora = secTostadora;
+		conf.setSecTostadora(secTostadora);
 	}
 
 	public void guardar() {
+	}
+	
+	public Bebidas getBebidas() {
+		return bebidas;
+	}
+	
+	public void updateAlertas() {
+		alertas = Alertas.getInstance().getAlertasAdmin();
+	}
+	
+	public void clearAlertas() {
+		Alertas.getInstance().getAlertasAdmin().clear();
+	}
+
+	public List<String> getAlertas() {
+		return alertas;
+	}
+
+	public void setAlertas(List<String> alertas) {
+		this.alertas = alertas;
 	}
 	
 }

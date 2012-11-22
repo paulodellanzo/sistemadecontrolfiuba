@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.print.attribute.standard.Severity;
 
+import ar.uba.fi.cimii.control.Alertas;
+import ar.uba.fi.cimii.control.ControlProceso;
 import ar.uba.fi.cimii.domain.entities.Pedido;
 import ar.uba.fi.cimii.maquinas.Parrilla;
 import ar.uba.fi.cimii.maquinas.TostadoraBases;
@@ -17,13 +22,12 @@ import ar.uba.fi.cimii.maquinas.TostadoraCorona;
 public class CocineroFaces {
 	
 	private List<Pedido> pedidoHamburguesas;
+	private List<String> alertas;
 
 	public CocineroFaces() {
 		super();
 		
 		pedidoHamburguesas = new ArrayList<Pedido>();
-		pedidoHamburguesas.add(new Pedido("hamburguesa1", Calendar.getInstance()));
-		pedidoHamburguesas.add(new Pedido("hamburguesa2", Calendar.getInstance()));
 	}
 	
 	public List<Pedido> getPedidoHamburguesas() {
@@ -44,6 +48,26 @@ public class CocineroFaces {
 	
 	public void agregarCarne() {
 		Parrilla.getInstance().agregarCarne();
+	}
+	
+	public void confirmarFinalizacion() {
+		ControlProceso.getInstance().finalizarProcesoActual();
+	}
+	
+	public void updateAlertas() {
+		alertas = Alertas.getInstance().getAlertasCocinero();
+	}
+	
+	public void clearAlertas() {
+		Alertas.getInstance().getAlertasCocinero().clear();
+	}
+
+	public List<String> getAlertas() {
+		return alertas;
+	}
+
+	public void setAlertas(List<String> alertas) {
+		this.alertas = alertas;
 	}
 	
 }
